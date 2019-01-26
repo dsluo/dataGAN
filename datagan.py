@@ -10,6 +10,7 @@ from esrgan.esrgan import ESRGAN
 
 # noinspection PyArgumentList,PyUnresolvedReferences,PyCallByClass
 class MainWidget(QWidget):
+    DEFAULT_MODEL_PATH = (Path(__file__).parent / 'esrgan/models').absolute()
 
     def __init__(self):
         super().__init__()
@@ -18,7 +19,7 @@ class MainWidget(QWidget):
 
         self.inputs = None
         self.output_directory = None
-        self.model = str((Path(__file__).parent / 'esrgan/models/RRDB_ESRGAN_x4.pth').absolute())
+        self.model = str(self.DEFAULT_MODEL_PATH / 'RRDB_ESRGAN_x4.pth')
 
         self.setWindowTitle('dataGAN')
 
@@ -80,7 +81,7 @@ class MainWidget(QWidget):
         self.thread = None
 
     def select_inputs(self):
-        self.inputs, _ = QFileDialog.getOpenFileNames(self, 'Open File', '', 'All Files (*)')
+        self.inputs, _ = QFileDialog.getOpenFileNames(self, 'Open File', str(Path.home()), 'All Files (*)')
         if len(self.inputs) == 1:
             name = Path(self.inputs[0]).name
             self.input_select.setText(name)
@@ -92,12 +93,12 @@ class MainWidget(QWidget):
         self.process.setDisabled(not (self.inputs and self.output_directory))
 
     def select_output(self):
-        self.output_directory = QFileDialog.getExistingDirectory(self, 'Output Directory')
+        self.output_directory = QFileDialog.getExistingDirectory(self, 'Output Directory', str(Path.home()))
         self.output_select.setText(self.output_directory)
         self.process.setDisabled(not (self.inputs and self.output_directory))
 
     def select_model(self):
-        self.model, _ = QFileDialog.getOpenFileName(self, 'Open File', '', 'NN Models (*.pth)')
+        self.model, _ = QFileDialog.getOpenFileName(self, 'Open File', str(self.DEFAULT_MODEL_PATH), 'NN Models (*.pth)')
         self.model_select.setText(self.model)
 
     def upscale(self):
