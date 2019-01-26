@@ -81,7 +81,7 @@ class MainWidget(QWidget):
         self.thread = None
 
     def select_inputs(self):
-        self.inputs, _ = QFileDialog.getOpenFileNames(self, 'Open File', str(Path.home()), 'All Files (*)')
+        self.inputs, _ = QFileDialog.getOpenFileNames(self, 'Open File', str(Path.home()))
         if len(self.inputs) == 1:
             name = Path(self.inputs[0]).name
             self.input_select.setText(name)
@@ -98,7 +98,8 @@ class MainWidget(QWidget):
         self.process.setDisabled(not (self.inputs and self.output_directory))
 
     def select_model(self):
-        self.model, _ = QFileDialog.getOpenFileName(self, 'Open File', str(self.DEFAULT_MODEL_PATH), 'NN Models (*.pth)')
+        self.model, _ = QFileDialog.getOpenFileName(self, 'Open File', str(self.DEFAULT_MODEL_PATH),
+                                                    'NN Models (*.pth *.pt);;All Files (*)')
         self.model_select.setText(self.model)
 
     def upscale(self):
