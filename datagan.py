@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QLa
 from esrgan.esrgan import ESRGAN
 
 
+# noinspection PyArgumentList,PyUnresolvedReferences,PyCallByClass
 class MainWidget(QWidget):
 
     def __init__(self):
@@ -134,6 +135,7 @@ class MainWidget(QWidget):
         self.progress.setValue(self.progress.value() + 1)
 
 
+# noinspection PyArgumentList
 class Worker(QtCore.QObject):
     OUTPUT_FORMAT = '{file.stem}-upscaled{file.suffix}'
 
